@@ -17,11 +17,22 @@ pipeline {
                 sh 'mvn clean install'
             }
         }
+
         stage('Trivy FS scan') {
-            steps {
-                sh 'trivy fs --format table -o fs.html .'
+        steps {
+        sh '''
+            docker run --rm \
+            -v $(pwd):/project \
+            aquasec/trivy:latest \
+            fs --format table -o /project/fs.html /project
+        '''
             }
-        }     
+        }
+        // stage('Trivy FS scan') {
+        //     steps {
+        //         sh 'trivy fs --format table -o fs.html .'
+        //     }
+        // }     
         stage('Sonar Analysis') {
             steps {
                 withSonarQubeEnv('sonar') {
