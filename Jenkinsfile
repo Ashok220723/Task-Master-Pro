@@ -86,19 +86,17 @@ pipeline {
                 }
             }
         }
-
         stage('Trivy Image Scan') {
-         steps {
+    steps {
         sh '''
             docker run --rm \
               -v /var/run/docker.sock:/var/run/docker.sock \
-              -v $(pwd):/root/.cache/ \
+              -v $(pwd):/workspace \
               aquasec/trivy:latest \
-              image --format table -o /root/.cache/image.html jay24666/taskmaster:latest
+              image --format table -o /workspace/image.html jay24666/taskmaster:latest
         '''
         sh 'mv image.html image-scan-report.html'
-            }
-        }
+    }
         // stage('Trivy Image scan') {
         //     steps {
         //         sh 'trivy image --format table -o image.html jay24666/taskmaster:latest'
