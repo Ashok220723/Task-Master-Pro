@@ -97,7 +97,8 @@ pipeline {
         '''
         sh 'mv image.html image-scan-report.html'
     }
-        // stage('Trivy Image scan') {
+        }
+                // stage('Trivy Image scan') {
         //     steps {
         //         sh 'trivy image --format table -o image.html jay24666/taskmaster:latest'
         //     }
