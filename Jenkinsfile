@@ -77,18 +77,31 @@ pipeline {
         //         }
         //     }
         // }
-        // stage('Docker build and Tag') {
-        //     steps {
-        //         script{
-        //         withDockerRegistry(credentialsId: 'dockerCred', toolName: 'docker') {
-        //                 sh 'docker build -t sriramk16/taskmaster:latest .'
-        //             }
-        //         }
-        //     }
-        // }
+        stage('Docker build and Tag') {
+            steps {
+                script{
+                withDockerRegistry(credentialsId: 'docker', toolName: 'docker') {
+                        sh 'docker build -t jay24666/taskmaster:latest .'
+                    }
+                }
+            }
+        }
+
+        stage('Trivy Image Scan') {
+         steps {
+        sh '''
+            docker run --rm \
+              -v /var/run/docker.sock:/var/run/docker.sock \
+              -v $(pwd):/root/.cache/ \
+              aquasec/trivy:latest \
+              image --format table -o /root/.cache/image.html jay24666/taskmaster:latest
+        '''
+        sh 'mv image.html image-scan-report.html'
+            }
+        }
         // stage('Trivy Image scan') {
         //     steps {
-        //         sh 'trivy image --format table -o image.html sriramk16/taskmaster:latest'
+        //         sh 'trivy image --format table -o image.html jay24666/taskmaster:latest'
         //     }
         // }
         // stage('Push Docker Image') {
