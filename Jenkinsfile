@@ -114,8 +114,8 @@ pipeline {
          stage ("Deploy to cluster dev-kt-k8s") {
             steps {
                 withKubeConfig(credentialsId: 'k8s-token') {
-                    sh "kubectl apply -f C:/Users/Jayanth/OneDrive/Desktop/Work space/Taskmaster-pro/Task-Master-Pro/deployment-service.yaml"
-                }
+                    sh "kubectl apply -f deployment-service.yaml"
+                }  
             }
          }
         // stage('K8s Deploy') {
