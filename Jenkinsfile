@@ -105,7 +105,7 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script{
-                withDockerRegistry(credentialsId: 'dockerCred', toolName: 'docker') {
+                withDockerRegistry(credentialsId: 'docker', toolName: 'docker') {
                         sh 'docker push jay24666/taskmaster:latest'
                     }
                 }
