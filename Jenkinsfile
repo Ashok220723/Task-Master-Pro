@@ -114,11 +114,10 @@ pipeline {
          stage ("Deploy to cluster dev-kt-k8s") {
             steps {
                 withKubeConfig(credentialsId: 'k8s-token') {
-                    sh "kubectl apply -f deployment-service.yml"
+                    sh "kubectl apply -f deployment-service.yaml"
                 }
             }
          }
-    
         // stage('K8s Deploy') {
         //     steps {
         //         withKubeConfig(caCertificate: '', clusterName: ' blog-cluster', contextName: '', credentialsId: 'k8s-token', namespace: 'webapps', restrictKubeConfigAccess: false, serverUrl: 'https://F215F65BF29C7EB75F58C53DC3D1C08C.gr7.us-east-1.eks.amazonaws.com') {
