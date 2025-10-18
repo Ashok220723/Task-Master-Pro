@@ -111,14 +111,14 @@ pipeline {
                 }
             }
         }
-        // stage('K8s Deploy') {
-        //     steps {
-        //         withKubeConfig(caCertificate: '', clusterName: ' blog-cluster', contextName: '', credentialsId: 'k8s-token', namespace: 'webapps', restrictKubeConfigAccess: false, serverUrl: 'https://F215F65BF29C7EB75F58C53DC3D1C08C.gr7.us-east-1.eks.amazonaws.com') {
-        //                 sh 'kubectl apply -f deployment-service.yml'
-        //                 sleep 35
-        //             }
-        //     }
-        // }
+        stage('K8s Deploy') {
+            steps {
+                withKubeConfig(caCertificate: '', clusterName: ' blog-cluster', contextName: '', credentialsId: 'k8s-token', namespace: 'webapps', restrictKubeConfigAccess: false, serverUrl: 'https://F215F65BF29C7EB75F58C53DC3D1C08C.gr7.us-east-1.eks.amazonaws.com') {
+                        sh 'kubectl apply -f deployment-service.yml'
+                        sleep 35
+                    }
+            }
+        }
         // stage('Verify K8s Deploy') {
         //     steps {
         //         withKubeConfig(caCertificate: '', clusterName: ' blog-cluster', contextName: '', credentialsId: 'k8s-token', namespace: 'webapps', restrictKubeConfigAccess: false, serverUrl: 'https://F215F65BF29C7EB75F58C53DC3D1C08C.gr7.us-east-1.eks.amazonaws.com') {
