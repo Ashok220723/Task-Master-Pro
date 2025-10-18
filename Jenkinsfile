@@ -102,15 +102,15 @@ pipeline {
         //         sh 'trivy image --format table -o image.html jay24666/taskmaster:latest'
         //     }
         // }
-        // stage('Push Docker Image') {
-        //     steps {
-        //         script{
-        //         withDockerRegistry(credentialsId: 'dockerCred', toolName: 'docker') {
-        //                 sh 'docker push sriramk16/taskmaster:latest'
-        //             }
-        //         }
-        //     }
-        // }
+        stage('Push Docker Image') {
+            steps {
+                script{
+                withDockerRegistry(credentialsId: 'dockerCred', toolName: 'docker') {
+                        sh 'docker push jay24666/taskmaster:latest'
+                    }
+                }
+            }
+        }
         // stage('K8s Deploy') {
         //     steps {
         //         withKubeConfig(caCertificate: '', clusterName: ' blog-cluster', contextName: '', credentialsId: 'k8s-token', namespace: 'webapps', restrictKubeConfigAccess: false, serverUrl: 'https://F215F65BF29C7EB75F58C53DC3D1C08C.gr7.us-east-1.eks.amazonaws.com') {
