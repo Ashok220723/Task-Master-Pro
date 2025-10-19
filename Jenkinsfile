@@ -114,7 +114,7 @@ pipeline {
          stage ("Deploy to cluster dev-kt-k8s") {
             steps {
                 withKubeConfig(credentialsId: 'k8s-token') {
-                    sh "kubectl apply -f deployment-service.yaml"
+                    sh "kubectl apply -f deployment-service.yml"
                 }  
             }
          }
