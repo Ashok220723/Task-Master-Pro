@@ -4,14 +4,10 @@ pipeline {
     //     maven 'maven3'
     // }
     environment {
-        SCANNER_HOME= tool 'sonar-scanner'
+        SCANNER_HOME= tool 'sonar-local'
     }
     stages {
-        stage('Git checkout') {
-            steps {
-                git branch: 'main', url: 'https://github.com/Kajjayamsriram/Task-Master-Pro.git'
-            }
-        }
+        
         stage('Bulding App') {
             steps {
                 sh 'mvn clean install'
@@ -35,7 +31,7 @@ pipeline {
         // }     
         stage('Sonar Analysis') {
             steps {
-                withSonarQubeEnv('sonar') {
+                withSonarQubeEnv('sonar-local') {
                     sh '''  $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=blogging -Dsonar.projectKey=blogging \
                     -Dsonar.java.binaries=target '''
                 }
@@ -80,7 +76,7 @@ pipeline {
             steps {
                 script{
                 withDockerRegistry(credentialsId: 'docker', toolName: 'docker') {
-                        sh 'docker build -t jay24666/taskmaster:latest .'
+                        sh 'docker build -t ash425/taskmaster:latest .'
                     }
                 }
             }
@@ -92,7 +88,7 @@ pipeline {
               -v /var/run/docker.sock:/var/run/docker.sock \
               -v $WORKSPACE:/workspace \
               aquasec/trivy:latest \
-              image --format table -o /workspace/image-scan-report.html jay24666/taskmaster:latest
+              image --format table -o /workspace/image-scan-report.html ash425/taskmaster:latest
         '''
             }
        }
@@ -105,14 +101,14 @@ pipeline {
             steps {
                 script{
                 withDockerRegistry(credentialsId: 'docker', toolName: 'docker') {
-                        sh 'docker push jay24666/taskmaster:latest'
+                        sh 'docker push ash425/taskmaster:latest'
                     }
                 }
             }
         }
          stage ("Deploy to cluster dev-kt-k8s") {
             steps {
-                withKubeConfig(credentialsId: 'k8s-token') {
+                withKubeConfig(credentialsId: 'minikube-kubeconfig') {
                     sh "kubectl apply -f deployment-service.yml --validate=false"
                 }  
             }
