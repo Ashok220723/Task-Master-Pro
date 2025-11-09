@@ -13,7 +13,7 @@ pipeline {
                 maven 'maven-3.9.11'
             }
             steps {
-                sh "mvn clean install-DskipTests"
+                sh "mvn clean install -DskipTests"
             }
         }
 
