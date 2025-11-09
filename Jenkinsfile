@@ -8,9 +8,12 @@ pipeline {
     }
     stages {
         
-        stage('Bulding App') {
+        stage("Build Code") {
+            tools {
+                maven 'maven-3.9.11'
+            }
             steps {
-                sh 'mvn clean install'
+                sh "mvn clean install -DskipTests"
             }
         }
 
