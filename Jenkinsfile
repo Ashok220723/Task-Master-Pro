@@ -13,7 +13,7 @@ pipeline {
                 maven 'maven-3.9.11'
             }
             steps {
-                sh "mvn clean install -DskipTests"
+                sh "mvn clean install-DskipTests"
             }
         }
 
@@ -52,7 +52,7 @@ pipeline {
                 nexusArtifactUploader(
                     nexusVersion: 'nexus3',
                     protocol: 'http',
-                    nexusUrl: 'nexus:8081',
+                    nexusUrl: '172.21.29.230:8081',
                     groupId: 'com.master',
                     version: '0.0.1-SNAPSHOT',   // must match POM
                     repository: 'maven-snapshots',  // snapshot repo
